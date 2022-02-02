@@ -12,7 +12,15 @@ class UpperData extends StatelessWidget {
           children: [
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [Text("Net balance: "), Text("0")]),
+                children: const [
+                  Text(
+                    "Net balance: ",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Text("0",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ]),
             const SizedBox(
               height: 5,
             ),
@@ -24,11 +32,38 @@ class UpperData extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [Text("Total income"), Text("0")],
+              children: const [
+                Text(
+                  "Total income",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                ),
+                Text(
+                  "0",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.green),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 4,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [Text("Total Expenses: "), Text("0")],
+              children: const [
+                Text(
+                  "Total Expenses: ",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                ),
+                Text(
+                  "0",
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.red),
+                )
+              ],
             )
           ],
         ),

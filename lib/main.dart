@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_expenses/contants/routes_constants.dart';
+import 'package:my_expenses/pages/addentry.dart';
 import 'package:my_expenses/pages/home.dart';
 
 void main() {
@@ -15,8 +17,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
 
         primarySwatch: Colors.blue,
+        fontFamily: 'poppins'
       ),
       home: const HomeScreen(title: "My expences",),
+      routes: {
+        RoutesContants.ADD_ENTRY:(contex)=> AddEntry(),
+      },
     );
   }
 }
