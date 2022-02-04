@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_expenses/models/EntryModel.dart';
+import 'package:my_expenses/providers/transaction_provider.dart';
 import 'package:my_expenses/widgets/date_picker.dart';
 import 'package:my_expenses/widgets/drop_down.dart';
 import 'package:my_expenses/widgets/inputtext.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class AddEntry extends StatefulWidget {
   @override
@@ -21,6 +24,7 @@ class _AddEntryState extends State<AddEntry> {
 
   @override
   Widget build(BuildContext context) {
+    final transactionProvider = Provider.of<TransactionProvider>(context,listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add transaction entry"),
@@ -62,14 +66,22 @@ class _AddEntryState extends State<AddEntry> {
             DatePicker(
               onDateChanged: (value) {
                 date =
-                    DateFormat('yyyy-MM-dd – kk:mm').format(value as DateTime);
+                    DateFormat('yyyy-MM-dd').format(value as DateTime);
               },
             ),
             const SizedBox(
               height: 30,
             ),
             ElevatedButton(
-                onPressed: () {}, child: const Text('Add transaction'))
+                onPressed: () async {
+                 await transactionProvider.addTransaction(EntryModel(
+                      tittle: title!,
+                      amount: amount!,
+                      date: date!,
+                      type: type,balance: 20000));
+                  Navigator.pop(context);
+                },
+                child: const Text('Add transaction'))
           ],
         ),
       ),

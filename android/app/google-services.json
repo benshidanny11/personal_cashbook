@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "594512282370",
+    "project_id": "personal-cash-book",
+    "storage_bucket": "personal-cash-book.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:594512282370:android:4b2bda78311c24e80a781b",
+        "android_client_info": {
+          "package_name": "com.kamosoft.my_expenses"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "594512282370-q99avcj3l3lp0oii9esaef99ln2gh8k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiIRIbOvBJvogBI6lcxT1MS08lttR0lCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "594512282370-q99avcj3l3lp0oii9esaef99ln2gh8k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -9,15 +9,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text(title),
       ),
       body: const ExpencesScreen(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child:const Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, RoutesContants.ADD_ENTRY);
+         Navigator.pushNamed(context, RoutesContants.ADD_ENTRY);
         },
       ),
     );
