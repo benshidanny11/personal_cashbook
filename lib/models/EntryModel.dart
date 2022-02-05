@@ -1,16 +1,22 @@
 import 'package:flutter/cupertino.dart';
 
 class EntryModel {
-  final String tittle;
-  final String type;
-  final double amount;
-  final double balance;
-  final String date;
+   String? tittle;
+   String? type;
+   double? amount;
+   double? balance;
+   String? date;
+  double? netBalace;
+  double? totalExpences;
+  double? totalIncome;
 
-  const EntryModel(
-      {required this.tittle,
-      required this.amount,
-      required this.date,
-      required this.type,
-      required this.balance});
+   EntryModel(
+      { this.tittle,
+       this.amount,
+       this.date,
+       this.type,
+       this.balance,
+      this.netBalace,
+      this.totalExpences,
+      this.totalIncome});
 }

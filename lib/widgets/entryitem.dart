@@ -19,7 +19,7 @@ class EntryItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  transaction.tittle,
+                  transaction.tittle!,
                   style:
                       const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
@@ -42,7 +42,7 @@ class EntryItem extends StatelessWidget {
               children: [
                 Chip(
                     label: Text(
-                  transaction.type,
+                  transaction.type!,
                   style: const TextStyle(color: Colors.blue),
                 )),
                 Text(
@@ -59,7 +59,7 @@ class EntryItem extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(transaction.date,
+                Text(transaction.date!,
                     style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,

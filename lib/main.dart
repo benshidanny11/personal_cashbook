@@ -45,10 +45,16 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'My expences',
         theme: ThemeData(primarySwatch: Colors.indigo, fontFamily: 'poppins'),
-        home: _user!=null?const SignPage():const SignPage(),
+        home: _user == null
+            ? const SignPage()
+            : const HomeScreen(
+                title: "Cashbook app",
+              ),
         routes: {
           RoutesContants.ADD_ENTRY: (context) => AddEntry(),
-          RoutesContants.HOME_ROUTE:(_)=>const HomeScreen(title: "Cash book app",),
+          RoutesContants.HOME_ROUTE: (_) => const HomeScreen(
+                title: "Cash book app",
+              ),
         },
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_expenses/contants/routes_constants.dart';
 import 'package:my_expenses/models/EntryModel.dart';
 import 'package:my_expenses/providers/transaction_provider.dart';
 import 'package:my_expenses/widgets/date_picker.dart';
@@ -79,7 +80,7 @@ class _AddEntryState extends State<AddEntry> {
                       amount: amount!,
                       date: date!,
                       type: type,balance: 20000));
-                  Navigator.pop(context);
+                  Navigator.pushReplacementNamed(context,RoutesContants.HOME_ROUTE);
                 },
                 child: const Text('Add transaction'))
           ],
