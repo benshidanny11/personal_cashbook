@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_expenses/models/EntryModel.dart';
+import 'package:my_expenses/models/upperdatamodel.dart';
+import 'package:my_expenses/pages/expenses.dart';
 import 'package:my_expenses/providers/transaction_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -12,14 +14,20 @@ class UpperData extends StatefulWidget {
 
 class _UpperDataState extends State<UpperData> {
   var _isInit = true;
-  EntryModel? entry;
+
+  double totalIncome = 0.0;
+  double totalExpenses = 0.0;
+  double netBalance = 0.0;
   @override
-  void didChangeDependencies() async{
+  void didChangeDependencies() async {
     if (_isInit) {
       final transactionProvider = Provider.of<TransactionProvider>(context);
-
-      entry =await transactionProvider.lastTransaction;
+      UpperDataModel transaction = await transactionProvider.upperData;
+      totalIncome = transaction.totalIncome;
+      totalExpenses = transaction.totalExpenses;
+      netBalance = transaction.netBalance;
     }
+    _isInit = false;
     super.didChangeDependencies();
   }
 
@@ -30,17 +38,15 @@ class _UpperDataState extends State<UpperData> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:  [
-                 const Text(
-                    "Net balance: ",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  Text(entry!.netBalace!=null?entry!.netBalace.toString():"0",
-                      style:
-                         const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
-                ]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              const Text(
+                "Net balance: ",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              Text(netBalance.toString(),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold))
+            ]),
             const SizedBox(
               height: 5,
             ),
@@ -52,14 +58,14 @@ class _UpperDataState extends State<UpperData> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:  [
+              children: [
                 const Text(
                   "Total income",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
                 ),
                 Text(
-                   entry!.totalIncome!=null?entry!.totalIncome.toString():"0",
-                  style:const TextStyle(
+                  totalIncome.toString(),
+                  style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w300,
                       color: Colors.green),
@@ -71,14 +77,14 @@ class _UpperDataState extends State<UpperData> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:  [
+              children: [
                 const Text(
                   "Total Expenses: ",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
                 ),
                 Text(
-                  entry!.totalExpences!=null?entry!.totalExpences.toString():"0",
-                  style:const TextStyle(
+                  totalExpenses.toString(),
+                  style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w300,
                       color: Colors.red),

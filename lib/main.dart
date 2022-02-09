@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:my_expenses/pages/edit_transaction.dart';
 import 'package:my_expenses/pages/signinpage.dart';
 import 'package:my_expenses/providers/goolgesigninprovider.dart';
 import 'package:my_expenses/providers/transaction_provider.dart';
@@ -55,6 +56,7 @@ class _MyAppState extends State<MyApp> {
           RoutesContants.HOME_ROUTE: (_) => const HomeScreen(
                 title: "Cash book app",
               ),
+          RoutesContants.EDIT_TRANSACTION_ROUTE:(context)=>const EditTransactionPage()
         },
       ),
     );

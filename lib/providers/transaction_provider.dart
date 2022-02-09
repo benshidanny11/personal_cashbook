@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:my_expenses/contants/string_constants.dart';
 import 'package:my_expenses/models/EntryModel.dart';
+import 'package:my_expenses/models/upperdatamodel.dart';
+import 'package:my_expenses/pages/expenses.dart';
 import 'package:my_expenses/utils/apputils.dart';
+import 'package:my_expenses/widgets/upper_info.dart';
 
 class TransactionProvider with ChangeNotifier {
   List<EntryModel> _transactions = [];
@@ -14,12 +18,8 @@ class TransactionProvider with ChangeNotifier {
   var userEmail = FirebaseAuth.instance.currentUser!.email;
   final _firestore = FirebaseFirestore.instance;
 
-  Future<void> addTransaction(EntryModel transaction) async {
-    int docSize = await _getDocSize();
-    Map<String, dynamic> trans;
-    var time = DateTime.now();
-    if (docSize == 0) {
-      trans = {
+  /*
+   trans = {
         "title": transaction.tittle,
         "type": transaction.type,
         "done_on": transaction.date,
@@ -28,7 +28,25 @@ class TransactionProvider with ChangeNotifier {
         "total_income": transaction.type == 'Income'
             ? transaction.amount
             : (transaction.amount)! * -1,
-        "total_expenses": 0,
+        "total_expenses": 0.0,
+        "balance": transaction.amount,
+        "created_on": time
+      };
+  
+  
+  */
+
+  Future<void> addTransaction(EntryModel transaction) async {
+    int docSize = await _getDocSize();
+    Map<String, dynamic> trans;
+    var time = DateTime.now();
+
+    if (docSize == 0) {
+      trans = {
+        "title": transaction.tittle,
+        "type": transaction.type,
+        "done_on": transaction.date,
+        "amount": transaction.amount,
         "balance": transaction.amount,
         "created_on": time
       };
@@ -38,30 +56,15 @@ class TransactionProvider with ChangeNotifier {
           .orderBy('created_on', descending: true)
           .get();
 
-      var lastDoc = expenses.docs.first;
-
-      var totalIn = transaction.type == "Income"
-          ? lastDoc.data()['total_income'] + transaction.amount
-          : lastDoc.data()['total_income'];
-      var totalEx = transaction.type == "Expense"
-          ? lastDoc.data()['total_expenses'] + transaction.amount
-          : lastDoc.data()['total_expenses'];
-      var netBalance = transaction.type == "Income"
-          ? lastDoc.data()['net_balance'] + transaction.amount
-          : lastDoc.data()['net_balance'] - transaction.amount;
-      var balance = transaction.type == "Income"
-          ? lastDoc.data()['balance'] + transaction.amount
-          : lastDoc.data()['balance'] - transaction.amount;
+      var balance =
+          (await totalIncome - await totalExpenses) - transaction.amount!;
       trans = {
         "title": transaction.tittle,
         "type": transaction.type,
         "done_on": transaction.date,
         "amount": transaction.amount,
-        "net_balance": netBalance,
-        "total_income": totalIn,
-        "total_expenses": totalEx,
         "balance": balance,
-        "created_on": time
+        "created_on": time,
       };
     }
     CollectionReference expences =
@@ -82,12 +85,11 @@ class TransactionProvider with ChangeNotifier {
       _transactions.add(EntryModel(
           tittle: expense.data()['title'],
           amount: expense.data()['amount'],
-          date: expense.data()['done_on'],
           type: expense.data()['type'],
-          balance: expense.data()['balance']));
+          balance: expense.data()['balance'],
+          docId: expense.id,
+          date: expense.data()['done_on'].toDate()));
     }
-
-    // sortedTransactions.sort((a, b) => a["timestamp"].compareTo(b["timestamp"]));
     notifyListeners();
   }
 
@@ -95,20 +97,6 @@ class TransactionProvider with ChangeNotifier {
     var expenses =
         await _firestore.collection(AppUtils.getSuBEmail(userEmail!)).get();
     return expenses.docs.length;
-  }
-
-  Future<EntryModel> get lastTransaction async {
-    final expenses = await _firestore
-        .collection(AppUtils.getSuBEmail(userEmail!))
-        .orderBy("created_on",descending: true)
-        .get();
-
-    var lastdoc = expenses.docs.first;
-
-    return EntryModel(
-        totalExpences: lastdoc.data()['total_expenses'],
-        totalIncome: lastdoc.data()['total_income'],
-        netBalace: lastdoc.data()['net_balance']);
   }
 
   Future<double> get totalIncome async {
@@ -123,5 +111,70 @@ class TransactionProvider with ChangeNotifier {
       }
     }
     return total;
+  }
+
+  Future<double> get totalExpenses async {
+    final expenses = await _firestore
+        .collection(AppUtils.getSuBEmail(userEmail!))
+        .orderBy("created_on", descending: true)
+        .get();
+    var total = 0.0;
+    for (var expense in expenses.docs) {
+      if (expense.data()['type'] == 'Expense') {
+        total += expense.data()['amount'];
+      }
+    }
+    return total;
+  }
+
+  Future<UpperDataModel> get upperData async {
+    final expenses = await _firestore
+        .collection(AppUtils.getSuBEmail(userEmail!))
+        .orderBy("created_on", descending: true)
+        .get();
+    var totalIn = 0.0;
+    for (var expense in expenses.docs) {
+      if (expense.data()['type'] == 'Income') {
+        totalIn += expense.data()['amount'];
+      }
+    }
+
+    var totalEx = 0.0;
+    for (var expense in expenses.docs) {
+      if (expense.data()['type'] == 'Expense') {
+        totalEx += expense.data()['amount'];
+      }
+    }
+
+    var netBalance = totalIn - totalEx;
+    return UpperDataModel(
+        totalIncome: totalIn, totalExpenses: totalEx, netBalance: netBalance);
+  }
+
+  Future<void> updateTransaction(
+      EntryModel transaction, EntryModel prevTrans) async {
+    var time = DateTime.now();
+
+    var trans = {
+      "title": transaction.tittle,
+      "type": transaction.type,
+      "done_on": transaction.date,
+      "amount": transaction.amount,
+      "created_on": time,
+    };
+    await _firestore
+        .collection(AppUtils.getSuBEmail(userEmail!))
+        .doc(transaction.docId)
+        .update(trans);
+
+    notifyListeners();
+  }
+
+  Future<void> removeTransaction(String docId) async {
+    await _firestore
+        .collection(AppUtils.getSuBEmail(userEmail!))
+        .doc(docId)
+        .delete();
+    notifyListeners();
   }
 }

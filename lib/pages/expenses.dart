@@ -42,6 +42,7 @@ class _ExpencesScreenState extends State<ExpencesScreen> {
   @override
   Widget build(BuildContext context) {
     final transactionProvider = Provider.of<TransactionProvider>(context);
+    final screenHeight = MediaQuery.of(context).size.height;
     //EntryItem()
     return Container(
       padding: const EdgeInsets.all(7),
@@ -75,13 +76,17 @@ class _ExpencesScreenState extends State<ExpencesScreen> {
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-                : ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      return EntryItem(
-                          transaction: transactionProvider.transactions[index]);
-                    },
-                    itemCount: transactionProvider.transactions.length,
-                  ),
+                : SizedBox(
+                  height: screenHeight*.6,
+                  child: ListView.builder(
+                      itemBuilder: (BuildContext context, int index) {
+                        return EntryItem(
+                            transaction:
+                                transactionProvider.transactions[index]);
+                      },
+                      itemCount: transactionProvider.transactions.length,
+                    ),
+                ),
           )
         ],
       ),

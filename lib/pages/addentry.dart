@@ -19,72 +19,88 @@ class _AddEntryState extends State<AddEntry> {
 
   String type = "Income";
 
-  String? date;
+  DateTime? date;
 
   double? amount;
 
   @override
   Widget build(BuildContext context) {
-    final transactionProvider = Provider.of<TransactionProvider>(context,listen: false);
+    final transactionProvider =
+        Provider.of<TransactionProvider>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add transaction entry"),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InputText(
-              onTextChange: (value) {
-                title = value;
-              },
-              textInputType: TextInputType.text,
-              label: "Transaction title",
+      
+      body: Stack(
+        children: [
+           Container(color:Colors.indigo,height: 250,),
+          Positioned(
+            top: 50,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Card(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    height: 350,
+                    child: Column(
+                    children: [
+                      InputText(
+                        onTextChange: (value) {
+                          title = value;
+                        },
+                        textInputType: TextInputType.text,
+                        label: "Transaction title",
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      InputText(
+                          onTextChange: (value) {
+                            amount = double.parse(value);
+                          },
+                          textInputType: TextInputType.number,
+                          label: "Amount of transaction"),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      DropDown(
+                          type: type,
+                          onTextChanged: (value) {
+                            setState(() {
+                              type = value!;
+                            });
+                          }),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      DatePicker(
+                        onDateChanged: (value) {
+                          date = value;
+                        },
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      ElevatedButton(
+                          onPressed: () async {
+                            await transactionProvider.addTransaction(EntryModel(
+                                tittle: title!,
+                                amount: amount!,
+                                date: date!,
+                                type: type));
+                            Navigator.pushReplacementNamed(
+                                context, RoutesContants.HOME_ROUTE);
+                          },
+                          child: const Text('Add transaction'))
+                    ],
+                          ),
+                  ),
+                ),
+              ),
+             
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            InputText(
-                onTextChange: (value) {
-                  amount = double.parse(value);
-                },
-                textInputType: TextInputType.number,
-                label: "Amount of transaction"),
-            const SizedBox(
-              height: 10,
-            ),
-            DropDown(
-                type: type,
-                onTextChanged: (value) {
-                  setState(() {
-                    type = value!;
-                  });
-                }),
-            const SizedBox(
-              height: 10,
-            ),
-            DatePicker(
-              onDateChanged: (value) {
-                date =
-                    DateFormat('yyyy-MM-dd').format(value as DateTime);
-              },
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            ElevatedButton(
-                onPressed: () async {
-                 await transactionProvider.addTransaction(EntryModel(
-                      tittle: title!,
-                      amount: amount!,
-                      date: date!,
-                      type: type,balance: 20000));
-                  Navigator.pushReplacementNamed(context,RoutesContants.HOME_ROUTE);
-                },
-                child: const Text('Add transaction'))
-          ],
-        ),
+          ),
+        ]
       ),
     );
   }
