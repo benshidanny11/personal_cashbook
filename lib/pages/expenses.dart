@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_expenses/models/EntryModel.dart';
 import 'package:my_expenses/providers/transaction_provider.dart';
 import 'package:my_expenses/widgets/entryitem.dart';
+import 'package:my_expenses/widgets/loading_place_holder.dart';
 import 'package:my_expenses/widgets/upper_info.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,9 @@ class _ExpencesScreenState extends State<ExpencesScreen> {
           _isLoading = false;
         });
       }).catchError((onError) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Unknown error"),
+        ));
         if (mounted) {
           setState(() {
             _isLoading = false;
@@ -73,12 +77,10 @@ class _ExpencesScreenState extends State<ExpencesScreen> {
           ),
           Expanded(
             child: _isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
+                ? const LoadingPlaceHolder()
                 : SizedBox(
-                  height: screenHeight*.6,
-                  child: ListView.builder(
+                    height: screenHeight * .6,
+                    child: ListView.builder(
                       itemBuilder: (BuildContext context, int index) {
                         return EntryItem(
                             transaction:
@@ -86,7 +88,7 @@ class _ExpencesScreenState extends State<ExpencesScreen> {
                       },
                       itemCount: transactionProvider.transactions.length,
                     ),
-                ),
+                  ),
           )
         ],
       ),

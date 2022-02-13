@@ -5,7 +5,6 @@ import 'package:my_expenses/pages/edit_transaction.dart';
 import 'package:my_expenses/pages/signinpage.dart';
 import 'package:my_expenses/providers/goolgesigninprovider.dart';
 import 'package:my_expenses/providers/transaction_provider.dart';
-import 'package:my_expenses/utils/color_util.dart';
 import 'package:provider/provider.dart';
 import 'package:my_expenses/contants/routes_constants.dart';
 import 'package:my_expenses/pages/addentry.dart';
@@ -56,7 +55,8 @@ class _MyAppState extends State<MyApp> {
           RoutesContants.HOME_ROUTE: (_) => const HomeScreen(
                 title: "Cash book app",
               ),
-          RoutesContants.EDIT_TRANSACTION_ROUTE:(context)=>const EditTransactionPage()
+          RoutesContants.EDIT_TRANSACTION_ROUTE:(context)=>const EditTransactionPage(),
+           RoutesContants.SIGNIN_ROUTE:(context)=>const SignPage()
         },
       ),
     );

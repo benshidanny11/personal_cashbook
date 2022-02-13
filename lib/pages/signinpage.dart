@@ -14,73 +14,83 @@ class _SignPageState extends State<SignPage> {
   bool _isLoading = false;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "My cash book",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.indigo),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            _isLoading
-                ? const CircularProgressIndicator()
-                : GestureDetector(
-                    onTap: () async {
-                      setState(() {
-                        _isLoading = true;
-                      });
-                      final googleProvider = Provider.of<GoogleSignInProvider>(
-                          context,
-                          listen: false);
-                      var credencials = await googleProvider.googleLogin();
-                      if (credencials != null) {
-                        Navigator.pushReplacementNamed(context, RoutesContants.HOME_ROUTE);
-                      } else {
+      body: Container(
+        decoration:const BoxDecoration(
+          color: Colors.indigo,
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset('images/applogo_trans.png',width: 250,height: 250,),
+              const Text(
+                "My cash book",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              _isLoading
+                  ? const CircularProgressIndicator(color: Colors.white,)
+                  : GestureDetector(
+                      onTap: () async {
                         setState(() {
-                          _isLoading = false;
+                          _isLoading = true;
                         });
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 45, vertical: 0),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Image.asset(
-                                  "images/googleicon.png",
-                                  width: 25,
-                                  height: 25,
-                                ),
-                                const Text("Sign in with google",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold))
+                        final googleProvider =
+                            Provider.of<GoogleSignInProvider>(context,
+                                listen: false);
+                        var credencials = await googleProvider.googleLogin();
+                        if (credencials != null) {
+                          Navigator.pushReplacementNamed(
+                              context, RoutesContants.HOME_ROUTE);
+                        } else {
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 45, vertical: 0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey[300] as Color,
+                                    blurRadius: 10,
+                                    spreadRadius: 1)
                               ]),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Image.asset(
+                                    "images/googleicon.png",
+                                    width: 25,
+                                    height: 25,
+                                  ),
+                                  const Text("Sign in with google",
+                                      style: TextStyle(
+                                          color: Colors.indigo,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold))
+                                ]),
+                          ),
                         ),
-                        color: Colors.indigo,
                       ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       ),
     );
