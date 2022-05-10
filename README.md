@@ -1,16 +1,18 @@
-# my_expenses
+# My expenses
 
-A new Flutter project.
+My expenses app is a mobile app that helps a user to track thier daily transactions.
 
-## Getting Started
+## Getting Started:
 
-This project is a starting point for a Flutter application.
+- [Download app here](https://play.google.com/store/apps/details?id=com.kamosoft.my_expenses)
 
-A few resources to get you started if this is your first Flutter project:
+## Technologies used:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Flutter (Dart)
+- Firebase firestore.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Author
+
+- [Daniel Urimubenshi](https://github.com/benshidanny11)
+
+
