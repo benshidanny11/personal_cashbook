@@ -13,8 +13,24 @@
 - Flutter (Dart)
 - Firebase firestore.
 
-## Author
+## Authors
 
-- [Daniel Urimubenshi](https://github.com/benshidanny11)
+👤 **Daniel Urimubenshi**
+
+- GitHub: [@benshidanny11](https://github.com/benshidanny11)
+
+## 🤝 Contributors
+
+- [@benshidanny11](https://github.com/benshidanny11)
+
+## 🔐 License
+
+- [LICENSE.md](./LICENSE.md)
+
+## Acknowledgments
+
+- [@KDlamin](https://github.com/KDlamini)
+- [@Cindy Shin](https://www.behance.net/adagio07) the author of the [originer design](https://www.behance.net/gallery/29845175/CC-Global-Summit-2015)
+
 
 
