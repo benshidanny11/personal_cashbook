@@ -2,7 +2,7 @@
 
 ## Description
 
-> My expenses app is a mobile app that helps a user to track thier daily transactions. The My expenses app, is intended to solve a problem of spending money in useles things witch is the most commont problem that the world is facing today. The app helps a user to record their income and expences, it shows all the trace of money used based on daily basis and it shows the remaining amount(Balance).
+> My expenses app is a mobile app that helps users to track their daily transactions. The My expenses app solves the problem of spending money on useless things, this is the most common problem that the world is facing today. The app helps a user to record their income and expenses. It shows all the traces of money spent and calculates the remaining amount(Balance).
 
 ## Getting Started:
 
